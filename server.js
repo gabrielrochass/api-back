@@ -1,38 +1,7 @@
 import express from 'express';
+import conectarAoBanco from './src/config/dbConfig.js';
 
-const posts = [
-    {
-        id: 1,
-        descricao: "Uma foto teste",
-        imagem: "https://placecats.com/millie/300/150"
-    },
-    {
-        id: 2,
-        descricao: "Gato brincando no jardim",
-        imagem: "https://placecats.com/millie/300/150"
-    },
-    {
-        id: 3,
-        descricao: "Gato dormindo na cadeira",
-        imagem: "https://placecats.com/millie/300/150"
-    },
-    {
-        id: 4,
-        descricao: "Gato curioso olhando para a câmera",
-        imagem: "https://placecats.com/millie/300/150"
-    },
-    {
-        id: 5,
-        descricao: "Gato preto em uma janela",
-        imagem: "https://placecats.com/millie/300/150"
-    },
-    {
-        id: 6,
-        descricao: "Gato e sua tigela de comida",
-        imagem: "https://placecats.com/millie/300/150"
-    }
-];
-
+const conexao = await conectarAoBanco(process.env.STRING_CONEXAO);
 
 // inicializa o express. o app representa o servidor (instancia)
 const app = express(); 
@@ -46,9 +15,16 @@ app.listen(3000, () => {
 // o servidor tá escutando na porta 3000
 // listen:  função que "sobe" o servidor
 
+async function getTodosPosts() {
+    const db = conexao.db("db");
+    const colecao = db.collection("posts");
+    return colecao.find().toArray();
+}
+
 // define as rotas
-app.get("/posts", (req, res) => {
-   res.status(200).json(posts); 
+app.get("/posts", async (req, res) => {
+    const posts = await getTodosPosts();
+    res.status(200).json(posts); 
 }); 
 
 function buscarPostsPorID(id) {
