@@ -1,4 +1,5 @@
 // camada padrão que tem a responsabilidade de lidar com os dados, definindo sua estrutura e interagindo diretamente com o banco de dados
+import 'dotenv/config';
 import { ObjectId } from "mongodb";
 import conectarAoBanco from "../config/dbConfig.js";
 
