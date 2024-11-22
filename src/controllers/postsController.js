@@ -1,8 +1,19 @@
 // camada padrão que tem a responsabilidade de lidar com as requisições e as respostas do servidor
 
-import getTodosPosts from "../models/postsModel.js";
+import { criarPost, getTodosPosts } from "../models/postsModel.js";
 
 export async function listarPosts(req, res) {
     const posts = await getTodosPosts();
     res.status(200).json(posts); 
+}
+
+export async function postarPost(req, res) {
+    const novoPost = req.body;
+    try {
+        const postCriado = await criarPost(novoPost);
+        res.status(200).json(postCriado);
+    } catch(erro) {
+        console.error(erro.message);
+        res.status(500).json({"Erro": "Falha na requisição"})
+    }
 }
