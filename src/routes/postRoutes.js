@@ -2,7 +2,7 @@
 
 import express from "express";
 import multer from "multer";
-import { listarPosts, postarPost, uploadImagem } from "../controllers/postsController.js";
+import { atualizarNovoPost, listarPosts, postarPost, uploadImagem } from "../controllers/postsController.js";
 
 // código para funcionar no windows
 const storage = multer.diskStorage({
@@ -22,6 +22,7 @@ const routes = (app) => {
     app.get("/posts", listarPosts); // não executa, apenas lista o que vai ser usado
     app.post("/posts", postarPost) // criar post
     app.post("/upload", upload.single("imagem"), uploadImagem)
+    app.put("/upload/:id", atualizarNovoPost);
 }
 
 export default routes;
