@@ -24,7 +24,7 @@ const upload = multer({storage}) // middleware: upload de imagem
 
 const routes = (app) => {
     app.use(express.json()); // devolver a estrutura em json para o cliente
-    app.use(cors(cors(corsOptions)));
+    app.use(cors(corsOptions));
 
     app.get("/posts", listarPosts); // não executa, apenas lista o que vai ser usado
     app.post("/posts", postarPost) // criar post
